@@ -2,7 +2,9 @@
 using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -10,6 +12,8 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RoleBanListCommand : IConsoleCommand
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!; // WD
+
     public string Command => "rolebanlist";
     public string Description => Loc.GetString("cmd-rolebanlist-desc");
     public string Help => Loc.GetString("cmd-rolebanlist-help");
@@ -45,7 +49,9 @@ public sealed class RoleBanListCommand : IConsoleCommand
         var targetHWid = located.LastHWId;
         var targetAddress = located.LastAddress;
 
-        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, includeUnbanned);
+        var serverName = _cfg.GetCVar(CCVars.AdminLogsServerName); // WD
+
+        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, includeUnbanned, serverName); // WD EDIT
 
         if (bans.Count == 0)
         {
@@ -86,6 +92,13 @@ public sealed class RoleBanListCommand : IConsoleCommand
             bansString
                 .Append("Reason: ")
                 .Append(ban.Reason);
+
+            // WD START
+            bansString
+                .Append('\n')
+                .Append("Server: ")
+                .Append(ban.ServerName);
+            // WD END
         }
 
         shell.WriteLine(bansString.ToString());

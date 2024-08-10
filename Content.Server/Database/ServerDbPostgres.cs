@@ -68,7 +68,8 @@ namespace Content.Server.Database
         public override async Task<ServerBanDef?> GetServerBanAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            string serverName = GlobalServerName) // WD EDIT
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -78,7 +79,7 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt, serverName) // WD EDIT
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -88,7 +89,8 @@ namespace Content.Server.Database
 
         public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId, bool includeUnbanned)
+            ImmutableArray<byte>? hwId, bool includeUnbanned,
+            string serverName = GlobalServerName) // WD EDIT
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -98,7 +100,7 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt, serverName); // WD EDIT
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -122,7 +124,8 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             DbGuardImpl db,
             bool includeUnbanned,
-            ServerBanExemptFlags? exemptFlags)
+            ServerBanExemptFlags? exemptFlags,
+            string serverName = GlobalServerName) // WD EDIT
         {
             DebugTools.Assert(!(address == null && userId == null && hwId == null));
 
@@ -158,6 +161,14 @@ namespace Content.Server.Database
             DebugTools.Assert(
                 query != null,
                 "At least one filter item (IP/UserID/HWID) must have been given to make query not null.");
+
+            // WD START
+            if (serverName != GlobalServerName)
+            {
+                query = query.Where(p =>
+                    p.ServerName == serverName || p.ServerName == GlobalServerName || string.IsNullOrEmpty(p.ServerName));
+            }
+            // WD END
 
             if (!includeUnbanned)
             {
@@ -206,7 +217,8 @@ namespace Content.Server.Database
                 ban.Reason,
                 ban.Severity,
                 aUid,
-                unbanDef);
+                unbanDef,
+                ban.ServerName ??= GlobalServerName); // WD EDIT
         }
 
         private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
@@ -243,7 +255,8 @@ namespace Content.Server.Database
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 RoundId = serverBan.RoundId,
                 PlaytimeAtNote = serverBan.PlaytimeAtNote,
-                PlayerUserId = serverBan.UserId?.UserId
+                PlayerUserId = serverBan.UserId?.UserId,
+                ServerName = serverBan.ServerName // WD
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -282,7 +295,8 @@ namespace Content.Server.Database
         public override async Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
-            bool includeUnbanned)
+            bool includeUnbanned,
+            string serverName = GlobalServerName) // WD EDIT
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -291,7 +305,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeRoleBanLookupQuery(address, userId, hwId, db, includeUnbanned)
+            var query = MakeRoleBanLookupQuery(address, userId, hwId, db, includeUnbanned, serverName) // WD EDIT
                 .OrderByDescending(b => b.BanTime);
 
             return await QueryRoleBans(query);
@@ -320,7 +334,8 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
             DbGuardImpl db,
-            bool includeUnbanned)
+            bool includeUnbanned,
+            string serverName = GlobalServerName) // WD EDIT
         {
             IQueryable<ServerRoleBan>? query = null;
 
@@ -350,6 +365,14 @@ namespace Content.Server.Database
 
                 query = query == null ? newQ : query.Union(newQ);
             }
+
+            // WD START
+            if (serverName != GlobalServerName)
+            {
+                query = query?.Where(p =>
+                    p.ServerName == serverName || p.ServerName == GlobalServerName || string.IsNullOrEmpty(p.ServerName));
+            }
+            // WD END
 
             if (!includeUnbanned)
             {
@@ -396,7 +419,8 @@ namespace Content.Server.Database
                 ban.Severity,
                 aUid,
                 unbanDef,
-                ban.RoleId);
+                ban.RoleId,
+                ban.ServerName ??= GlobalServerName); // WD EDIT
         }
 
         private static ServerRoleUnbanDef? ConvertRoleUnban(ServerRoleUnban? unban)
@@ -435,6 +459,7 @@ namespace Content.Server.Database
                 PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
                 PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
+                ServerName = serverRoleBan.ServerName // WD
             };
             db.PgDbContext.RoleBan.Add(ban);
 

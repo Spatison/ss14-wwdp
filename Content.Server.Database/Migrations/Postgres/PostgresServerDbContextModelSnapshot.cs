@@ -36,6 +36,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("admin_rank_id");
 
+                    b.Property<string>("AdminServer")
+                        .HasColumnType("text")
+                        .HasColumnName("admin_server");
+
                     b.Property<string>("Title")
                         .HasColumnType("text")
                         .HasColumnName("title");
@@ -812,15 +816,9 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
 
-					// Parkstation-HeightSlider Start
                     b.Property<float>("Height")
                         .HasColumnType("real")
                         .HasColumnName("height");
-
-                    b.Property<float>("Width")
-                        .HasColumnType("real")
-                        .HasColumnName("width");
-                    // Parkstation-HeightSlider End
 
                     b.Property<JsonDocument>("Markings")
                         .HasColumnType("jsonb")
@@ -856,6 +854,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("species");
+
+                    b.Property<float>("Width")
+                        .HasColumnType("real")
+                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_profile");
@@ -982,6 +984,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int?>("RoundId")
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
+
+                    b.Property<string>("ServerName")
+                        .HasColumnType("text")
+                        .HasColumnName("server_name");
 
                     b.Property<int>("Severity")
                         .HasColumnType("integer")
@@ -1121,6 +1127,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int?>("RoundId")
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
+
+                    b.Property<string>("ServerName")
+                        .HasColumnType("text")
+                        .HasColumnName("server_name");
 
                     b.Property<int>("Severity")
                         .HasColumnType("integer")

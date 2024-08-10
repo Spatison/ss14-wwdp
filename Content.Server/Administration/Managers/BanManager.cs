@@ -37,6 +37,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
+    public const string GlobalServerName = "unknown";
 
     private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
 
@@ -78,7 +79,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
     {
-        var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId, false);
+        var roleBans = await _db.GetServerRoleBansAsync(address, userId, hwId, false, _cfg.GetCVar(CCVars.AdminLogsServerName)); // WD EDIT
 
         var userRoleBans = new HashSet<ServerRoleBanDef>();
         foreach (var ban in roleBans)
@@ -112,7 +113,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     }
 
     #region Server Bans
-    public async void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string reason)
+    public async void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string reason, bool isGlobalBan) // WD EDIT
     {
         DateTimeOffset? expires = null;
         if (minutes > 0)
@@ -123,6 +124,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         _systems.TryGetEntitySystem<GameTicker>(out var ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
         var playtime = target == null ? TimeSpan.Zero : (await _db.GetPlayTimes(target.Value)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
+
+        var serverName = isGlobalBan ? GlobalServerName : _cfg.GetCVar(CCVars.AdminLogsServerName); // WD
 
         var banDef = new ServerBanDef(
             null,
@@ -136,7 +139,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             reason,
             severity,
             banningAdmin,
-            null);
+            null,
+            serverName); // WD EDIT
 
         await _db.AddServerBanAsync(banDef);
         var adminName = banningAdmin == null
@@ -182,7 +186,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     #region Job Bans
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
-    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
+    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan, bool isGlobalBan) // WD EDIT
     {
         if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
         {
@@ -200,6 +204,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
         var playtime = target == null ? TimeSpan.Zero : (await _db.GetPlayTimes(target.Value)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall)?.TimeSpent ?? TimeSpan.Zero;
 
+        var serverName = isGlobalBan ? GlobalServerName : _cfg.GetCVar(CCVars.AdminLogsServerName); // WD
+
         var banDef = new ServerRoleBanDef(
             null,
             target,
@@ -213,7 +219,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             severity,
             banningAdmin,
             null,
-            role);
+            role,
+            serverName); // WD EDIT
 
         if (!await AddRoleBan(banDef))
         {

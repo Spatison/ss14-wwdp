@@ -141,7 +141,7 @@ namespace Content.Server.Connection
                 hwId = null;
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
+            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false, _cfg.GetCVar(CCVars.AdminLogsServerName)); // WD EDIT
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];

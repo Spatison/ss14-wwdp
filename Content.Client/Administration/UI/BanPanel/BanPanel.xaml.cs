@@ -20,7 +20,7 @@ namespace Content.Client.Administration.UI.BanPanel;
 [GenerateTypedNameReferences]
 public sealed partial class BanPanel : DefaultWindow
 {
-    public event Action<string?, (IPAddress, int)?, bool, byte[]?, bool, uint, string, NoteSeverity, string[]?, bool>? BanSubmitted;
+    public event Action<string?, (IPAddress, int)?, bool, byte[]?, bool, uint, string, NoteSeverity, bool, bool>? BanSubmitted; // WD EDIT
     public event Action<string>? PlayerChanged;
     private string? PlayerUsername { get; set; }
     private (IPAddress, int)? IpAddress { get; set; }
@@ -31,7 +31,7 @@ public sealed partial class BanPanel : DefaultWindow
     private TimeSpan? ButtonResetOn { get; set; }
     // This is less efficient than just holding a reference to the root control and enumerating children, but you
     // have to know how the controls are nested, which makes the code more complicated.
-    private readonly List<CheckBox> _roleCheckboxes = new();
+    // private readonly List<CheckBox> _roleCheckboxes = new();
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -40,7 +40,7 @@ public sealed partial class BanPanel : DefaultWindow
         BasicInfo,
         //Text,
         Players,
-        Roles
+        // Roles
     }
 
     private enum Multipliers
@@ -54,12 +54,12 @@ public sealed partial class BanPanel : DefaultWindow
         Permanent
     }
 
-    private enum Types
+    /* private enum Types
     {
         None,
         Server,
         Role
-    }
+    }*/
 
     public BanPanel()
     {
@@ -90,11 +90,11 @@ public sealed partial class BanPanel : DefaultWindow
             HwidLine.Editable = HwidCheckbox.Pressed;
             OnHwidChanged();
         };
-        TypeOption.OnItemSelected += args =>
+        /* TypeOption.OnItemSelected += args =>
         {
             TypeOption.SelectId(args.Id);
             OnTypeChanged();
-        };
+        };*/
         LastConnCheckbox.OnPressed += args =>
         {
             IpLine.ModulateSelfOverride = null;
@@ -104,12 +104,12 @@ public sealed partial class BanPanel : DefaultWindow
         };
         SubmitButton.OnPressed += SubmitButtonOnOnPressed;
 
-        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) NoteSeverity.None);
+        /* SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) NoteSeverity.None);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) NoteSeverity.Minor);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) NoteSeverity.Medium);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int) NoteSeverity.High);
         SeverityOption.SelectId((int) NoteSeverity.Medium);
-        SeverityOption.OnItemSelected += args => SeverityOption.SelectId(args.Id);
+        SeverityOption.OnItemSelected += args => SeverityOption.SelectId(args.Id); */
 
         MultiplierOption.AddItem(Loc.GetString("ban-panel-minutes"), (int) Multipliers.Minutes);
         MultiplierOption.AddItem(Loc.GetString("ban-panel-hours"), (int) Multipliers.Hours);
@@ -124,25 +124,25 @@ public sealed partial class BanPanel : DefaultWindow
         Tabs.SetTabTitle((int) TabNumbers.BasicInfo, Loc.GetString("ban-panel-tabs-basic"));
         //Tabs.SetTabTitle((int) TabNumbers.Text, Loc.GetString("ban-panel-tabs-reason"));
         Tabs.SetTabTitle((int) TabNumbers.Players, Loc.GetString("ban-panel-tabs-players"));
-        Tabs.SetTabTitle((int) TabNumbers.Roles, Loc.GetString("ban-panel-tabs-role"));
+        /* Tabs.SetTabTitle((int) TabNumbers.Roles, Loc.GetString("ban-panel-tabs-role"));
         Tabs.SetTabVisible((int) TabNumbers.Roles, false);
 
         TypeOption.AddItem(Loc.GetString("ban-panel-select"), (int) Types.None);
         TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int) Types.Server);
-        TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role);
+        TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role); */
 
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        /* var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         foreach (var proto in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             CreateRoleGroup(proto.ID, proto.Roles, proto.Color);
         }
 
-        CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red);
+        CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red); */
     }
 
-    private void CreateRoleGroup(string roleName, IEnumerable<string> roleList, Color color)
+    /* private void CreateRoleGroup(string roleName, IEnumerable<string> roleList, Color color)
     {
         var outerContainer = new BoxContainer
         {
@@ -208,7 +208,7 @@ public sealed partial class BanPanel : DefaultWindow
         };
         container.AddChild(roleCheckbox);
         _roleCheckboxes.Add(roleCheckbox);
-    }
+    } */
 
     public void UpdateBanFlag(bool newFlag)
     {
@@ -349,11 +349,11 @@ public sealed partial class BanPanel : DefaultWindow
         Hwid = Convert.FromHexString(hwidString);
     }
 
-    private void OnTypeChanged()
+    /* private void OnTypeChanged()
     {
         TypeOption.ModulateSelfOverride = null;
         Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
-    }
+    } */
 
     private void UpdateSubmitEnabled()
     {
@@ -390,7 +390,7 @@ public sealed partial class BanPanel : DefaultWindow
 
     private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
     {
-        string[]? roles = null;
+        /* string[]? roles = null;
         if (TypeOption.SelectedId == (int) Types.Role)
         {
             var rolesList = new List<string>();
@@ -413,7 +413,7 @@ public sealed partial class BanPanel : DefaultWindow
             TypeOption.ModulateSelfOverride = Color.Red;
             Tabs.CurrentTab = (int) TabNumbers.BasicInfo;
             return;
-        }
+        } */
 
         var reason = Rope.Collapse(ReasonTextEdit.TextRope);
         if (string.IsNullOrWhiteSpace(reason))
@@ -437,9 +437,10 @@ public sealed partial class BanPanel : DefaultWindow
         var player = PlayerCheckbox.Pressed ? PlayerUsername : null;
         var useLastIp = IpCheckbox.Pressed && LastConnCheckbox.Pressed && IpAddress is null;
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
-        var severity = (NoteSeverity) SeverityOption.SelectedId;
+        // var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
-        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, severity, roles, erase);
+        var isGlobalBan = GlobalBanCheckbox.Pressed;
+        BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, NoteSeverity.Medium, erase, isGlobalBan); // WD EDIT
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
