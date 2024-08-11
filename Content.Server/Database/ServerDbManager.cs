@@ -141,7 +141,7 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
             bool includeUnbanned = true,
-            string serverName = GlobalServerName);
+            string serverName = GlobalServerName); // WD EDIT
 
         Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverBan);
         Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverBan);

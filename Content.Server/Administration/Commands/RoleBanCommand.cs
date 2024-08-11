@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -145,7 +145,7 @@ public sealed class RoleBanCommand : IConsoleCommand
             3 => CompletionResult.FromHint(Loc.GetString("cmd-roleban-hint-3")),
             4 => CompletionResult.FromHintOptions(durOpts, Loc.GetString("cmd-roleban-hint-4")),
             5 => CompletionResult.FromHintOptions(severities, Loc.GetString("cmd-roleban-hint-5")),
-            6 => CompletionResult.FromHint("<is_global>"),
+            6 => CompletionResult.FromHint("<is_global>"), // WD
             _ => CompletionResult.Empty
         };
     }

@@ -691,7 +691,7 @@ namespace Content.Server.Database
             existing.Flags = admin.Flags;
             existing.Title = admin.Title;
             existing.AdminRankId = admin.AdminRankId;
-            existing.AdminServer = admin.AdminServer;
+            existing.AdminServer = admin.AdminServer; // WD
 
             await db.DbContext.SaveChangesAsync(cancel);
         }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -112,7 +112,7 @@ public sealed class BanListEui : BaseEui
                     : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
                 unban,
                 ban.Role,
-                ban.ServerName ?? "unknown"
+                ban.ServerName ?? "unknown" // WD
             ));
         }
     }

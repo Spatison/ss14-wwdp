@@ -439,7 +439,7 @@ public sealed partial class BanPanel : DefaultWindow
         var useLastHwid = HwidCheckbox.Pressed && LastConnCheckbox.Pressed && Hwid is null;
         // var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
-        var isGlobalBan = GlobalBanCheckbox.Pressed;
+        var isGlobalBan = GlobalBanCheckbox.Pressed; // WD
         BanSubmitted?.Invoke(player, IpAddress, useLastIp, Hwid, useLastHwid, (uint) (TimeEntered * Multiplier), reason, NoteSeverity.Medium, erase, isGlobalBan); // WD EDIT
     }
 

@@ -291,7 +291,7 @@ namespace Content.Server.Database
                 PlaytimeAtNote = serverBan.PlaytimeAtNote,
                 PlayerUserId = serverBan.UserId?.UserId,
                 RoleId = serverBan.Role,
-                ServerName = serverBan.ServerName
+                ServerName = serverBan.ServerName // WD
             };
             db.SqliteDbContext.RoleBan.Add(ban);
 
@@ -350,7 +350,7 @@ namespace Content.Server.Database
                 aUid,
                 unban,
                 ban.RoleId,
-                ban.ServerName ??= GlobalServerName);
+                ban.ServerName ??= GlobalServerName); // WD EDIT
         }
 
         private static ServerRoleUnbanDef? ConvertRoleUnban(ServerRoleUnban? unban)
@@ -409,7 +409,7 @@ namespace Content.Server.Database
                 ban.Severity,
                 aUid,
                 unban,
-                ban.ServerName ??= GlobalServerName);
+                ban.ServerName ??= GlobalServerName); // WD EDIT
         }
 
         private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)

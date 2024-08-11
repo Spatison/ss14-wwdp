@@ -142,7 +142,7 @@ namespace Content.Client.Administration.UI
                     PosFlags = pos,
                     NegFlags = neg,
                     RankId = rank,
-                    AdminServer = adminServer
+                    AdminServer = adminServer // WD
                 });
             }
             else
@@ -156,7 +156,7 @@ namespace Content.Client.Administration.UI
                     PosFlags = pos,
                     NegFlags = neg,
                     RankId = rank,
-                    AdminServer = adminServer
+                    AdminServer = adminServer // WD
                 });
             }
 

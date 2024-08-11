@@ -37,7 +37,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
-    public const string GlobalServerName = "unknown";
+    public const string GlobalServerName = "unknown"; // WD
 
     private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
 
