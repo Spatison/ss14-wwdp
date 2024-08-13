@@ -5,7 +5,7 @@
   obfuscation:
     !type:ReplacementObfuscation
     replacement:
-    - "*incomprehensible*" # Never actually used
+    - "*неразборчивый*" # Never actually used
 
 # The common galactic tongue.
 - type: language
@@ -15,25 +15,48 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - blah
-    - blah
-    - blah
-    - dingle-doingle
-    - dingle
-    - dangle
-    - jibber-jabber
-    - jubber
-    - bleh
-    - zippity
-    - zoop
-    - wibble
-    - wobble
-    - wiggle
-    - yada
-    - meh
-    - neh
-    - nah
-    - wah
+    - бла
+    - бла-
+    - бла..
+    - бинго-бонго
+    - манго
+    - бинго
+    - хамбл-бамбл
+    - замн
+    - бле
+    - хероши
+    - симпл
+    - вибл
+    - вобл
+    - вигл
+    - да
+    - нет
+    - мех
+    - ну
+    - вах
+    - ихк
+    - итч
+    - ду
+    - бист
+    - вас
+    - шон
+    - мелиних
+    - белин
+    - желт
+    - бренц
+    - хаст
+    - мищ
+    - гифра
+    - унелихт
+    - ронжур
+    - коммон
+    - вармо
+    - бине
+    - каине
+    - кине
+    - катзе
+    - фрау
+    - франге
 
 # Spoken by slimes.
 - type: language
@@ -46,11 +69,14 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - blob
-    - plop
-    - pop
-    - bop
-    - boop
+    - блумп
+    - блорп
+    - бламп
+    - блорб
+    - бламп
+    - блорм
+    - блорбл
+    - буп
 
 # Spoken by moths.
 - type: language
@@ -132,11 +158,11 @@
     minSyllables: 1
     maxSyllables: 5
     replacement:
-    - hs
-    - zt
-    - kr
-    - st
-    - sh
+    - хс
+    - хрх
+    - крх
+    - схр
+    - сх
 
 # A mess of broken Japanese, spoken by Felinds and Oni
 - type: language
@@ -149,54 +175,54 @@
     minSyllables: 1
     maxSyllables: 3 # May be too long even, we'll see.
     replacement:
-    - neko
-    - nyan
-    - mimi
-    - moe
-    - mofu
-    - fuwa
-    - kyaa
-    - kawaii
-    - poka
-    - munya
-    - puni
-    - munyu
-    - ufufu
-    - icha
-    - doki
-    - kyun
-    - kusu
-    - nya
-    - nyaa
-    - desu
-    - kis
-    - ama
-    - chuu
-    - baka
-    - hewo
-    - boop
-    - gato
-    - kit
-    - sune
-    - yori
-    - sou
-    - baka
-    - chan
-    - san
-    - kun
-    - mahou
-    - yatta
-    - suki
-    - usagi
-    - domo
-    - ori
-    - uwa
-    - zaazaa
-    - shiku
-    - puru
-    - ira
-    - heto
-    - etto
+    - неко
+    - ня
+    - мими
+    - мае
+    - мофу
+    - фува
+    - киа
+    - каваи
+    - поки
+    - муня
+    - пуни
+    - миню
+    - уфуфу
+    - ича
+    - доки
+    - кун
+    - кусу
+    - ня
+    - няя
+    - десу
+    - кис
+    - ама
+    - чуу
+    - бяка
+    - нево
+    - буп
+    - гато
+    - кит
+    - суне
+    - йори
+    - соу
+    - бака
+    - чан
+    - сан
+    - кун
+    - махоу
+    - йатта
+    - саке
+    - усаги
+    - домо
+    - ори
+    - ува
+    - зиза
+    - шику
+    - пуру
+    - ири
+    - хето
+    - етто
 
 # Spoken by the Lizard race.
 - type: language
@@ -208,90 +234,99 @@
     minSyllables: 2
     maxSyllables: 4
     replacement:
-    - za
-    - az
-    - ze
-    - ez
-    - zi
-    - iz
-    - zo
-    - oz
-    - zu
-    - uz
-    - zs
-    - sz
-    - ha
-    - ah
-    - he
-    - eh
-    - hi
-    - ih
-    - ho
-    - oh
-    - hu
-    - uh
-    - hs
-    - sh
-    - la
-    - al
-    - le
-    - el
-    - li
-    - il
-    - lo
-    - ol
-    - lu
-    - ul
-    - ls
-    - sl
-    - ka
-    - ak
-    - ke
-    - ek
-    - ki
-    - ik
-    - ko
-    - ok
-    - ku
-    - uk
-    - ks
-    - sk
-    - sa
-    - as
-    - se
-    - es
-    - si
-    - is
-    - so
-    - os
-    - su
-    - us
-    - ss
-    - ss
-    - ra
-    - ar
-    - re
-    - er
-    - ri
-    - ir
-    - ro
-    - or
-    - ru
-    - ur
-    - rs
-    - sr
-    - a
-    - a
-    - e
-    - e
-    - i
-    - i
-    - o
-    - o
-    - u
-    - u
-    - s
-    - s
+    - за
+    - аз
+    - зе
+    - ез
+    - зи
+    - из
+    - зо
+    - оз
+    - зу
+    - уз
+    - зс
+    - сз
+    - ха
+    - ах
+    - хе
+    - ех
+    - хи
+    - их
+    - хо
+    - ох
+    - ху
+    - ух
+    - хс
+    - сх
+    - ла
+    - ал
+    - ле
+    - ел
+    - ли
+    - ил
+    - ло
+    - ол
+    - лу
+    - ул
+    - лс
+    - сл
+    - ка
+    - ак
+    - ке
+    - ек
+    - ки
+    - ик
+    - ко
+    - ок
+    - ку
+    - ук
+    - кс
+    - ск
+    - са
+    - ас
+    - се
+    - ес
+    - си
+    - ис
+    - со
+    - ос
+    - су
+    - ус
+    - сс
+    - сс
+    - ра
+    - ар
+    - ре
+    - ер
+    - ри
+    - ир
+    - ро
+    - ор
+    - ру
+    - ур
+    - рс
+    - ср
+    - а
+    - а
+    - е
+    - е
+    - и
+    - и
+    - о
+    - о
+    - у
+    - у
+    - с
+    - с
+    - рар
+    - хс
+    - хсс
+    - ссс
+    - сс
+    - хсссс
+    - хис
+    - хисс
+    - хиссс
 
 # Spoken by the Vulpkanin race.
 - type: language
@@ -303,63 +338,63 @@
     minSyllables: 1
     maxSyllables: 4
     replacement:
-    - rur
-    - ya
-    - cen
-    - rawr
-    - bar
-    - kuk
-    - tek
-    - qat
-    - uk
-    - wu
-    - vuh
-    - tah
-    - tch
-    - schz
-    - auch
-    - ist
-    - ein
-    - entch
-    - zwichs
-    - tut
-    - mir
-    - wo
-    - bis
-    - es
-    - vor
-    - nic
-    - gro
-    - enem
-    - zandt
-    - tzch
-    - noch
-    - hel
-    - ischt
-    - far
-    - wa
-    - baram
-    - iereng
-    - tech
-    - lach
-    - sam
-    - mak
-    - lich
-    - gen
-    - or
-    - ag
-    - eck
-    - gec
-    - stag
-    - onn
-    - bin
-    - ket
-    - jarl
-    - vulf
-    - einech
-    - cresthz
-    - azunein
-    - ghzth
+    - рур
+    - йа
+    - сен
+    - равр
+    - бар
+    - кук
+    - тек
+    - куат
+    - ук
+    - ву
+    - вух
+    - тах
+    - тх
+    - схз
+    - ауч
+    - ист
+    - эин
+    - эинтх
+    - звитч
+    - тит
+    - мир
+    - во
+    - бис
+    - ес
+    - вор
+    - ник
+    - гро
+    - енем
+    - зандт
+    - зхч
+    - ноч
+    - хел
+    - сишт
+    - сфар
+    - сва
+    - сбарам
+    - сиеерэнг
+    - στεч
+    - слах
+    - сам
+    - смак
+    - слих
+    - сген
+    - сор
+    - саг
+    - сек
+    - сегек
+    - стяг
+    - сонн
+    - син
+    - скет
+    - сярл
+    - свульф
+    - сейнэх
+    - скрестоэз
+    - сазунэйн
+    - сгизэтх
 
 # The common language of the Sol system.
 - type: language
@@ -371,23 +406,85 @@
     minSyllables: 1
     maxSyllables: 4
     replacement:
-    - tao
-    - shi
-    - tzu
-    - yi
-    - com
-    - be
-    - is
-    - i
-    - op
-    - vi
-    - ed
-    - lec
-    - mo
-    - cle
-    - te
-    - dis
-    - e
+    - суке
+    - водка
+    - узи
+    - чётка
+    - лесниц
+    - перепал
+    - шар
+    - автом
+    - гепербон
+    - черк
+    - зон
+    - курга
+    - мол
+    - клен
+    - теби
+    - дистрак
+    - йо
+    - зерник
+    - озорно
+    - перон
+    - гангрена
+    - шалем
+    - эскимо
+    - йо-йо
+    - холупа
+    - бомба
+    - пеший
+    - йормак
+    - лесополос
+    - кирдык
+    - мяско
+    - шедран
+    - эшерон
+    - эшёлкон
+    - дибон
+    - бульон
+    - медальон
+    - елон
+    - малон
+    - пост
+    - сорбет
+    - щербет
+    - мальон
+    - ак
+    - ок
+    - що
+    - као
+    - кио
+    - мало
+    - много
+    - юзел
+    - дизел
+    - мигел
+    - щавел
+    - мигрен
+    - болени
+    - колени
+    - уставы
+    - суставы
+    - кишканы
+    - эстаны
+    - серганы
+    - морганы
+    - дербаны
+    - молдавы
+    - кошканы
+    - мешканы
+    - зорген
+    - морген
+    - порген
+    - и
+    - в
+    - через
+    - после
+    - посредством
+    - возможно
+    - чумба
+    - человечек
+    - чувачок
 
 - type: language
   id: RobotTalk
@@ -409,10 +506,17 @@
     minSyllables: 1
     maxSyllables: 2
     replacement:
-    - murr
-    - meow
-    - purr
-    - mrow
+    - мрр
+    - мяу
+    - прр
+    - мряу
+    - мрях
+    - мруа
+    - мрия
+    - мрх
+    - мрф
+    - мррр
+    - мряя
 
 - type: language
   id: Dog
@@ -421,12 +525,14 @@
     minSyllables: 1
     maxSyllables: 2
     replacement:
-    - woof
-    - bark
-    - ruff
-    - bork
-    - raff
-    - garr
+    - вуф
+    - барк
+    - рфф
+    - барк
+    - рффф
+    - грр
+    - гррр
+    - гр
 
 - type: language
   id: Fox
@@ -435,12 +541,12 @@
     minSyllables: 1
     maxSyllables: 2
     replacement:
-    - ruff
-    - raff
-    - garr
-    - yip
-    - yap
-    - myah
+    - сниф
+    - йифф
+    - снюф
+    - йап
+    - йип
+    - мьех
 
 - type: language
   id: Xeno
@@ -449,8 +555,14 @@
     minSyllables: 1
     maxSyllables: 8 # I was crazy once
     replacement:
-    - s
-    - S
+    - хс
+    - сх
+    - Х
+    - х
+    - С
+    - с
+    - сс
+    - хх
 
 - type: language
   id: Monkey
@@ -459,8 +571,14 @@
     minSyllables: 1
     maxSyllables: 8 # They locked me in a room...
     replacement:
-    - o
-    - k
+    - ОАААК
+    - УУУАА
+    - Ы
+    - ОАКОАК
+    - АААЫА
+    - УЫАА
+    - АААУ
+    - ЫУААА
 
 - type: language
   id: Mouse
@@ -469,14 +587,14 @@
     minSyllables: 2
     maxSyllables: 3
     replacement:
-    - squ
-    - eak
-    - pi
-    - ep
-    - chuu
-    - ee
-    - fwi
-    - he
+    - скуик
+    - сквик
+    - пи
+    - еп
+    - чуу
+    - ии
+    - фр
+    - пип
 
 - type: language
   id: Chicken
@@ -485,9 +603,9 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - co
-    - coo
-    - ot
+    - ко
+    - коко
+    - кууу
 
 - type: language
   id: Duck
@@ -496,9 +614,9 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - qu
-    - ack
-    - quack
+    - ква
+    - квак
+    - кваки
 
 - type: language
   id: Cow
@@ -507,8 +625,12 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - moo
-    - mooo
+    - му
+    - муу
+    - мууу
+    - муму
+    - мууму
+    - муумуу
 
 - type: language
   id: Sheep
@@ -517,9 +639,9 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - ba
-    - baa
-    - aa
+    - бе
+    - бее
+    - еее
 
 - type: language
   id: Kangaroo
@@ -528,10 +650,10 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - shre
-    - ack
-    - chuu
-    - choo
+    - хрх
+    - акх
+    - чрх
+    - чха
 
 - type: language
   id: Pig
@@ -540,7 +662,15 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - oink # Please someone come up with something better
+    - хрю
+    - хрюк
+    - хряк
+    - хрюки
+    - винкь
+    - вии
+    - ви
+    - вхр
+    - хря
 
 - type: language
   id: Crab
@@ -549,13 +679,14 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - click
-    - clack
-    - ti
-    - pi
-    - tap
-    - cli
-    - ick
+    - чк
+    - чок
+    - чик
+    - чиньк
+    - чоньк
+    - чикь
+    - ичк
+    - клац
 
 - type: language
   id: Kobold
@@ -564,17 +695,17 @@
     minSyllables: 2
     maxSyllables: 4
     replacement:
-    - yip
-    - yap
-    - gar
-    - grr
-    - ar
-    - scre
-    - et
-    - gronk
-    - hiss
-    - ss
-    - ee
+    - йип
+    - йар
+    - гар
+    - грр
+    - ар
+    - скре
+    - ет
+    - гронк
+    - хисс
+    - сс
+    - хс
 
 - type: language
   id: Hissing
@@ -583,10 +714,14 @@
     minSyllables: 2
     maxSyllables: 4
     replacement:
-    - hss
-    - iss
-    - ss
-    - is
+    - хсс
+    - хисс
+    - сс
+    - хс
+    - хссс
+    - ссс
+    - хисссс
+    - хис
 
 # Example of a sign language. Not currently used anyhow.
 - type: language
@@ -605,10 +740,10 @@
   obfuscation:
     !type:ReplacementObfuscation
     replacement:
-    - something
-    - a cryptic message to you
-    - a signal to you
-    - a message
-    - a rude expression to you
-    - a sad expression to you
-    - a happy expression to you
+    - что-то делает
+    - посылает скрытое послание
+    - что-то показывает
+    - передаёт сообщение
+    - изображает грубое выражение лица
+    - изображает грустное выражение лица
+    - изображает счастливое выражение лица

@@ -109,7 +109,7 @@
       steps:
       - component: DoorElectronics
         store: board
-        name: "door electronics circuit board"
+        name: "микросхема шлюза"
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
@@ -380,7 +380,7 @@
       steps:
       - component: DoorElectronics
         store: board
-        name: "door electronics circuit board"
+        name: "микросхема шлюза"
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics"
