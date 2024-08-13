@@ -112,7 +112,7 @@ public sealed class BanListEui : BaseEui
                     : (await _playerLocator.LookupIdAsync(ban.BanningAdmin.Value))?.Username,
                 unban,
                 ban.Role,
-                ban.ServerName ?? "unknown" // WD
+                ban.ServerName // WD
             ));
         }
     }
