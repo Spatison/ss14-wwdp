@@ -201,6 +201,7 @@
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
   - type: Puller
+  - type: TTS # White Dream
   - type: Speech
     speechSounds: Alto
   - type: DamageForceSay

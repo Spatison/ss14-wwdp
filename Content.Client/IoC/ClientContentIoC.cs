@@ -1,3 +1,4 @@
+using Content.Client._White.TTS;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -57,6 +58,8 @@ namespace Content.Client.IoC
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
             IoCManager.Register<JoinQueueManager>();
             IoCManager.Register<DiscordAuthManager>();
+
+            IoCManager.Register<TTSManager>(); // White Dream
         }
     }
 }

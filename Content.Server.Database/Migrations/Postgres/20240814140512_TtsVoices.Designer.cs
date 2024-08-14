@@ -5,6 +5,7 @@ using System.Text.Json;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using NpgsqlTypes;
@@ -14,9 +15,11 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    partial class PostgresServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240814140512_TtsVoices")]
+    partial class TtsVoices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,10 +38,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int?>("AdminRankId")
                         .HasColumnType("integer")
                         .HasColumnName("admin_rank_id");
-
-                    b.Property<string>("AdminServer")
-                        .HasColumnType("text")
-                        .HasColumnName("admin_server");
 
                     b.Property<string>("Title")
                         .HasColumnType("text")
@@ -990,10 +989,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
 
-                    b.Property<string>("ServerName")
-                        .HasColumnType("text")
-                        .HasColumnName("server_name");
-
                     b.Property<int>("Severity")
                         .HasColumnType("integer")
                         .HasColumnName("severity");
@@ -1132,10 +1127,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int?>("RoundId")
                         .HasColumnType("integer")
                         .HasColumnName("round_id");
-
-                    b.Property<string>("ServerName")
-                        .HasColumnType("text")
-                        .HasColumnName("server_name");
 
                     b.Property<int>("Severity")
                         .HasColumnType("integer")

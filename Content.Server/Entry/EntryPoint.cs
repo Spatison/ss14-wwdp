@@ -1,3 +1,4 @@
+using Content.Server._White.TTS;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -107,6 +108,12 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<JoinQueueManager>().Initialize();
                 IoCManager.Resolve<DiscordAuthManager>().Initialize();
                 IoCManager.Resolve<ServerApi>().Initialize();
+
+                // White Dream start
+
+                IoCManager.Resolve<TTSManager>().Initialize();
+
+                // White Dream end
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();

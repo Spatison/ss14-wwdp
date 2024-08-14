@@ -7,6 +7,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Content.Shared._White.TTS;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -40,6 +41,7 @@ namespace Content.Shared.Preferences
             float width,
             int age,
             Sex sex,
+            string voice,
             Gender gender,
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
@@ -54,6 +56,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Species = species;
+            Voice = voice;
             Height = height;
             Width = width;
             Age = age;
@@ -77,7 +80,7 @@ namespace Content.Shared.Preferences
             List<string> antagPreferences,
             List<string> traitPreferences,
             List<string> loadoutPreferences)
-            : this(other.Name, other.FlavorText, other.Species, other.Height, other.Width, other.Age, other.Sex, other.Gender, other.Appearance,
+            : this(other.Name, other.FlavorText, other.Species, other.Height, other.Width, other.Age, other.Sex, other.Voice, other.Gender, other.Appearance,
                 other.Clothing, other.Backpack, other.SpawnPriority, jobPriorities, other.PreferenceUnavailable,
                 antagPreferences, traitPreferences, loadoutPreferences)
         {
@@ -95,6 +98,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
+            string voice,
             float height,
             float width,
             int age,
@@ -109,7 +113,7 @@ namespace Content.Shared.Preferences
             IReadOnlyList<string> antagPreferences,
             IReadOnlyList<string> traitPreferences,
             IReadOnlyList<string> loadoutPreferences)
-            : this(name, flavortext, species, height, width, age, sex, gender, appearance, clothing, backpack, spawnPriority,
+            : this(name, flavortext, species, height, width, age, sex, voice, gender, appearance, clothing, backpack, spawnPriority,
                 new Dictionary<string, JobPriority>(jobPriorities), preferenceUnavailable,
                 new List<string>(antagPreferences), new List<string>(traitPreferences),
                 new List<string>(loadoutPreferences))
@@ -125,6 +129,7 @@ namespace Content.Shared.Preferences
             "John Doe",
             "",
             SharedHumanoidAppearanceSystem.DefaultSpecies,
+            SharedHumanoidAppearanceSystem.DefaultVoice,
             1f,
             1f,
             18,
@@ -156,6 +161,7 @@ namespace Content.Shared.Preferences
                 "John Doe",
                 "",
                 species,
+                SharedHumanoidAppearanceSystem.DefaultVoice,
                 1f,
                 1f,
                 18,
@@ -218,10 +224,14 @@ namespace Content.Shared.Preferences
                     gender = Gender.Female;
                     break;
             }
+            var voiceId = random.Pick(prototypeManager
+                .EnumeratePrototypes<TTSVoicePrototype>()
+                .Where(o => CanHaveVoice(o, sex)).ToArray()
+            ).ID;
 
             var name = GetName(species, gender);
 
-            return new HumanoidCharacterProfile(name, "", species, height, width, age, sex, gender,
+            return new HumanoidCharacterProfile(name, "", species, voiceId, height, width, age, sex, gender,
                 HumanoidCharacterAppearance.Random(species, sex), ClothingPreference.Jumpsuit,
                 BackpackPreference.Backpack, SpawnPriorityPreference.None,
                 new Dictionary<string, JobPriority>
@@ -234,6 +244,9 @@ namespace Content.Shared.Preferences
         public string FlavorText { get; private set; }
         [DataField("species")]
         public string Species { get; private set; }
+
+        [DataField("Voice")]
+        public string Voice { get; private set; } // White Dream
 
         [DataField("height")]
         public float Height { get; private set; }
@@ -266,6 +279,12 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithName(string name)
         {
             return new(this) { Name = name };
+        }
+
+        // White Dream
+        public HumanoidCharacterProfile WithVoice(string voice)
+        {
+            return new(this) { Voice = voice };
         }
 
         public HumanoidCharacterProfile WithFlavorText(string flavorText)
@@ -430,6 +449,7 @@ namespace Content.Shared.Preferences
                 || Height != other.Height
                 || Width != other.Width
                 || Sex != other.Sex
+                || Voice != other.Voice
                 || Gender != other.Gender
                 || PreferenceUnavailable != other.PreferenceUnavailable
                 || Clothing != other.Clothing
@@ -653,6 +673,19 @@ namespace Content.Shared.Preferences
 
             _loadoutPreferences.Clear();
             _loadoutPreferences.AddRange(loadouts);
+
+            // White Dream start
+            prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
+            if (voice is null || !CanHaveVoice(voice, Sex))
+                Voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+
+            // White Dream end
+        }
+
+        // White Dream
+        public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
+        {
+            return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
         }
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)

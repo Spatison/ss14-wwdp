@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared._White.TTS;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
@@ -31,6 +32,17 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
     [ValidatePrototypeId<SpeciesPrototype>]
     public const string DefaultSpecies = "Human";
+
+    // White Dream start
+    [ValidatePrototypeId<TTSVoicePrototype>]
+    public const string DefaultVoice = "Eugene";
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Eugene"},
+        {Sex.Female, "Kseniya"},
+        {Sex.Unsexed, "Xenia"},
+    };
+    // White Dream end
 
     public override void Initialize()
     {
@@ -241,6 +253,37 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             Dirty(humanoid);
     }
 
+    // White Dream
+    /// <summary>
+    ///     Set a humanoid mob's body yupe. This will change their base sprites.
+    /// </summary>
+    /// <param name="uid">The humanoid mob's UID.</param>
+    /// <param name="voiceId">The tts voice to set the mob to.</param>
+    /// <param name="sync">Whether to immediately synchronize this to the humanoid mob, or not.</param>
+    /// <param name="humanoid">Humanoid component of the entity</param>
+    // ReSharper disable once InconsistentNaming
+    public void SetTTSVoice(
+        EntityUid uid,
+        ProtoId<TTSVoicePrototype> voiceId,
+        bool sync = true,
+        HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!TryComp<TTSComponent>(uid, out var comp))
+            return;
+
+        if (!Resolve(uid, ref humanoid))
+        {
+            return;
+        }
+
+        humanoid.Voice = voiceId;
+        comp.Prototype = voiceId;
+        if (sync)
+        {
+            Dirty(uid, humanoid);
+        }
+    }
+
     /// <summary>
     ///     Set a humanoid mob's sex. This will not change their gender.
     /// </summary>
@@ -343,6 +386,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
+        SetTTSVoice(uid, profile.Voice, false, humanoid);
 
         humanoid.MarkingSet.Clear();
 

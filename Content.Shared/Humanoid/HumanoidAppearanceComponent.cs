@@ -1,3 +1,4 @@
+using Content.Shared._White.TTS;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences; // DeltaV
@@ -72,6 +73,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<TTSVoicePrototype> Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice; // White Dream
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings

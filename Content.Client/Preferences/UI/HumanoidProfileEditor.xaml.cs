@@ -57,6 +57,10 @@ namespace Content.Client.Preferences.UI
         private Button _saveButton => CSaveButton;
         private OptionButton _sexButton => CSexButton;
         private OptionButton _genderButton => CPronounsButton;
+
+        private OptionButton _voiceButton => CVoiceButton; // White Dream
+        private Button _voicePlayButton => CVoicePlayButton; // White Dream
+
         private Slider _skinColor => CSkin;
         private OptionButton _clothingButton => CClothingButton;
         private OptionButton _backpackButton => CBackpackButton;
@@ -176,6 +180,12 @@ namespace Content.Client.Preferences.UI
 
             #endregion Gender
 
+            #region Voice
+
+            InitializeVoice(); // White Dream
+
+            #endregion
+
             #region Species
 
             _speciesList = prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart).ToList();
@@ -272,7 +282,6 @@ namespace Content.Client.Preferences.UI
             #endregion Height
 
             #region Skin
-
 
             _skinColor.OnValueChanged += _ =>
             {
@@ -761,7 +770,6 @@ namespace Content.Client.Preferences.UI
                             }
                         }
                     };
-
                 }
             }
 
@@ -843,7 +851,7 @@ namespace Content.Client.Preferences.UI
                     var color = SkinColor.HumanSkinTone((int) _skinColor.Value);
 
                     CMarkings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color)); //
                     break;
                 }
                 case HumanoidSkinColor.Hues:
@@ -933,8 +941,18 @@ namespace Content.Client.Preferences.UI
             }
             UpdateGenderControls();
             CMarkings.SetSex(newSex);
+
+            UpdateTTSVoicesControls(); //White Dream
+
             IsDirty = true;
             UpdatePreview();
+        }
+
+        // White Dream
+        private void SetVoice(string newVoice)
+        {
+            Profile = Profile?.WithVoice(newVoice);
+            IsDirty = true;
         }
 
         private void SetGender(Gender newGender)
@@ -1028,7 +1046,7 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateFlavorTextEdit()
         {
-            if(_flavorTextEdit != null)
+            if (_flavorTextEdit != null)
                 _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
         }
 
@@ -1055,7 +1073,8 @@ namespace Content.Client.Preferences.UI
 
             // Add button for each sex
             foreach (var sex in sexes)
-                _sexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"), (int) sex);
+                _sexButton.AddItem(Loc.GetString($"humanoid-profile-editor-sex-{sex.ToString().ToLower()}-text"),
+                    (int) sex);
 
             if (sexes.Contains(Profile.Sex))
                 _sexButton.SelectId((int) Profile.Sex);
@@ -1237,7 +1256,10 @@ namespace Content.Client.Preferences.UI
             var facialHairMarking = Profile.Appearance.FacialHairStyleId switch
             {
                 HairStyles.DefaultFacialHairStyle => new List<Marking>(),
-                _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
+                _ => new()
+                {
+                    new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor })
+                },
             };
 
             _hairPicker.UpdateData(
@@ -1257,10 +1279,11 @@ namespace Content.Client.Preferences.UI
 
             // hair color
             Color? hairColor = null;
-            if ( Profile.Appearance.HairStyleId != HairStyles.DefaultHairStyle &&
+            if (Profile.Appearance.HairStyleId != HairStyles.DefaultHairStyle &&
                 _markingManager.Markings.TryGetValue(Profile.Appearance.HairStyleId, out var hairProto))
                 if (_markingManager.CanBeApplied(Profile.Species, Profile.Sex, hairProto, _prototypeManager))
-                    hairColor = _markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out _, _prototypeManager)
+                    hairColor = _markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out _,
+                        _prototypeManager)
                         ? Profile.Appearance.SkinColor
                         : Profile.Appearance.HairColor;
 
@@ -1277,15 +1300,17 @@ namespace Content.Client.Preferences.UI
 
             // facial hair color
             Color? facialHairColor = null;
-            if ( Profile.Appearance.FacialHairStyleId != HairStyles.DefaultFacialHairStyle &&
+            if (Profile.Appearance.FacialHairStyleId != HairStyles.DefaultFacialHairStyle &&
                 _markingManager.Markings.TryGetValue(Profile.Appearance.FacialHairStyleId, out var facialHairProto))
                 if (_markingManager.CanBeApplied(Profile.Species, Profile.Sex, facialHairProto, _prototypeManager))
-                    facialHairColor = _markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out _, _prototypeManager)
+                    facialHairColor = _markingManager.MustMatchSkin(Profile.Species, HumanoidVisualLayers.Hair, out _,
+                        _prototypeManager)
                         ? Profile.Appearance.SkinColor
                         : Profile.Appearance.FacialHairColor;
 
             if (facialHairColor != null)
-                CMarkings.FacialHairMarking = new(Profile.Appearance.FacialHairStyleId, new List<Color> { facialHairColor.Value });
+                CMarkings.FacialHairMarking = new(Profile.Appearance.FacialHairStyleId,
+                    new List<Color> { facialHairColor.Value });
             else
                 CMarkings.FacialHairMarking = null;
         }
@@ -1347,6 +1372,8 @@ namespace Content.Client.Preferences.UI
             UpdateHeightControls();
             UpdateWidthControls();
             UpdateWeight();
+
+            UpdateTTSVoicesControls(); // White Dream
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -1645,7 +1672,8 @@ namespace Content.Client.Preferences.UI
         {
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
             _loadoutPointsBar.Value = points;
-            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", points));
+            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                ("points", points), ("max", points));
 
             foreach (var preferenceSelector in _loadoutPreferences)
             {
@@ -1658,7 +1686,8 @@ namespace Content.Client.Preferences.UI
                 {
                     points -= preferenceSelector.Loadout.Cost;
                     _loadoutPointsBar.Value = points;
-                    _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", _loadoutPointsBar.MaxValue));
+                    _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                        ("points", points), ("max", _loadoutPointsBar.MaxValue));
                 }
             }
 
@@ -1671,7 +1700,8 @@ namespace Content.Client.Preferences.UI
         {
             // Reset loadout points so you don't get -14 points or something for no reason
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
-            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label", ("points", points), ("max", points));
+            _loadoutPointsLabel.Text = Loc.GetString("humanoid-profile-editor-loadouts-points-label",
+                ("points", points), ("max", points));
             _loadoutPointsBar.MaxValue = points;
             _loadoutPointsBar.Value = points;
 
@@ -1725,7 +1755,8 @@ namespace Content.Client.Preferences.UI
 
             if (loadouts.Count == 0)
             {
-                _loadoutsTab.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
+                _loadoutsTab.AddChild(
+                    new Label { Text = Loc.GetString("humanoid-profile-editor-loadouts-no-loadouts") });
                 return;
             }
 
@@ -1847,7 +1878,8 @@ namespace Content.Client.Preferences.UI
             }
 
             // Add the selected unusable loadouts to the point counter
-            foreach (var loadout in otherLoadouts.OrderBy(l => l.Cost).ThenBy(l => Loc.GetString($"loadout-{l.ID}-name")))
+            foreach (var loadout in otherLoadouts.OrderBy(l => l.Cost)
+                         .ThenBy(l => Loc.GetString($"loadout-{l.ID}-name")))
             {
                 var selector = new LoadoutPreferenceSelector(loadout, highJob?.Proto ?? new JobPrototype(),
                     Profile ?? HumanoidCharacterProfile.DefaultWithSpecies(), "",

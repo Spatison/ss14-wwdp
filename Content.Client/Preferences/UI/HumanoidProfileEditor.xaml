@@ -78,6 +78,13 @@
                                 <Control HorizontalExpand="True"/>
                                 <OptionButton Name="CPronounsButton" HorizontalAlignment="Right" />
                             </BoxContainer>
+                            <!-- TTS -->
+                            <BoxContainer HorizontalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
+                                <Control HorizontalExpand="True"/>
+                                <OptionButton Name="CVoiceButton" HorizontalAlignment="Right" />
+                                <Button Name="CVoicePlayButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
+                            </BoxContainer>
                             <!-- Show clothing -->
                             <BoxContainer HorizontalExpand="True">
                                 <Label Text="{Loc 'humanoid-profile-editor-clothing'}" />

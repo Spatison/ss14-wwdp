@@ -1,3 +1,4 @@
+using Content.Client._White.TTS;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -74,6 +75,8 @@ namespace Content.Client.Entry
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly JoinQueueManager _joinQueue = default!;
         [Dependency] private readonly DiscordAuthManager _discordAuth = default!;
+
+        [Dependency] private readonly TTSManager _ttsManager = default!; // White Dream
 
         public override void Init()
         {
@@ -168,6 +171,8 @@ namespace Content.Client.Entry
             _documentParsingManager.Initialize();
             _joinQueue.Initialize();
             _discordAuth.Initialize();
+
+            _ttsManager.Initialize(); // White Dream
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
