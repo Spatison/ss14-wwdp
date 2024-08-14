@@ -21,6 +21,7 @@ public sealed class ServerRoleBanDef
     public NetUserId? BanningAdmin { get; }
     public ServerRoleUnbanDef? Unban { get; }
     public string Role { get; }
+    public string ServerName { get; } // WD
 
     public ServerRoleBanDef(
         int? id,
@@ -35,7 +36,8 @@ public sealed class ServerRoleBanDef
         NoteSeverity severity,
         NetUserId? banningAdmin,
         ServerRoleUnbanDef? unban,
-        string role)
+        string role,
+        string serverName) // WD EDIT
     {
         if (userId == null && address == null && hwId ==  null)
         {
@@ -62,5 +64,6 @@ public sealed class ServerRoleBanDef
         BanningAdmin = banningAdmin;
         Unban = unban;
         Role = role;
+        ServerName = serverName; // WD
     }
 }

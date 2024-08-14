@@ -27,6 +27,7 @@ public sealed class BanCommand : LocalizedCommands
         string target;
         string reason;
         uint minutes;
+        var isGlobalBan = false; // WD
         if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
         {
             _logManager.GetSawmill("admin.server_ban")
@@ -72,6 +73,34 @@ public sealed class BanCommand : LocalizedCommands
                 }
 
                 break;
+            // WD START
+            case 5:
+                target = args[0];
+                reason = args[1];
+
+                if (!uint.TryParse(args[2], out minutes))
+                {
+                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[2])));
+                    shell.WriteLine(Help);
+                    return;
+                }
+
+                if (!Enum.TryParse(args[3], ignoreCase: true, out severity))
+                {
+                    shell.WriteLine(Loc.GetString("cmd-ban-invalid-severity", ("severity", args[3])));
+                    shell.WriteLine(Help);
+                    return;
+                }
+
+                if (!bool.TryParse(args[4], out isGlobalBan))
+                {
+                    shell.WriteLine(Loc.GetString($"{args[4]} should be True or False.\n{Help}"));
+                    shell.WriteLine(Help);
+                    return;
+                }
+
+                break;
+            // WD END
             default:
                 shell.WriteLine(Loc.GetString("cmd-ban-invalid-arguments"));
                 shell.WriteLine(Help);
@@ -90,7 +119,7 @@ public sealed class BanCommand : LocalizedCommands
         var targetUid = located.UserId;
         var targetHWid = located.LastHWId;
 
-        _bans.CreateServerBan(targetUid, target, player?.UserId, null, targetHWid, minutes, severity, reason);
+        _bans.CreateServerBan(targetUid, target, player?.UserId, null, targetHWid, minutes, severity, reason, isGlobalBan); // WD EDIT
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -131,6 +160,9 @@ public sealed class BanCommand : LocalizedCommands
 
             return CompletionResult.FromHintOptions(severities, Loc.GetString("cmd-ban-hint-severity"));
         }
+
+        if (args.Length == 5) // WD
+            return CompletionResult.FromHint("<is_global>");
 
         return CompletionResult.Empty;
     }

@@ -452,6 +452,17 @@ namespace Content.Server.Administration.Managers
                     Flags = flags
                 };
 
+                // WD START
+                var currentServerName = _cfg.GetCVar(CCVars.AdminLogsServerName);
+
+                if (!data.HasFlag(AdminFlags.Permissions) && !data.HasFlag(AdminFlags.Host) &&
+                    dbData.AdminServer != null && dbData.AdminServer != "unknown" && currentServerName != "unknown"
+                    && currentServerName != dbData.AdminServer)
+                {
+                    return null;
+                }
+                // WD END
+
                 if (dbData.Title != null)
                 {
                     data.Title = dbData.Title;
