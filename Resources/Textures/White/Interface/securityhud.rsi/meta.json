@@ -18,6 +18,12 @@
         },
         {
             "name": "remove"
+        },
+        {
+            "name": "paroled"
+        },
+        {
+            "name": "discharged"
         }
     ]
 }

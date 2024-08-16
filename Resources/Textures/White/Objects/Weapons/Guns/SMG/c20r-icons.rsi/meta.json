@@ -30,6 +30,18 @@
         },
         {
             "name": "silencer"
+        },
+        {
+            "name": "accelerator"
+        },
+        {
+            "name": "laser"
+        },
+        {
+            "name": "light"
+        },
+        {
+            "name": "flamehider"
         }
     ]
 }

@@ -18,6 +18,24 @@
         },
         {
             "name": "mag-0"
+        },
+        {
+            "name": "silencer"
+        },
+        {
+            "name": "accelerator"
+        },
+        {
+            "name": "laser"
+        },
+        {
+            "name": "light"
+        },
+        {
+            "name": "flamehider"
+        },
+        {
+            "name": "handguard"
         }
     ]
 }

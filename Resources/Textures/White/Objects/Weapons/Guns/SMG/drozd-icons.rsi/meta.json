@@ -21,6 +21,21 @@
 		},
 		{
 			"name": "silencer"
-		}
+		},
+        {
+            "name": "handguard"
+        },
+        {
+            "name": "accelerator"
+        },
+        {
+            "name": "laser"
+        },
+        {
+            "name": "light"
+        },
+        {
+            "name": "flamehider"
+        }
     ]
 }
