@@ -29,4 +29,14 @@ public sealed class WhiteCVars
         CVarDef.Create("tts.max_cash_size", 200, CVar.SERVERONLY | CVar.ARCHIVE);
 
     #endregion
+
+    #region Aspects
+
+    public static readonly CVarDef<bool> IsAspectsEnabled =
+        CVarDef.Create("aspects.enabled", false, CVar.SERVERONLY);
+
+    public static readonly CVarDef<double> AspectChance =
+        CVarDef.Create("aspects.chance", 0.1d, CVar.SERVERONLY);
+
+    #endregion
 }

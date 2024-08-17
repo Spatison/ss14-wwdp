@@ -141,6 +141,7 @@
   - type: Tag
     tags:
       - FullBodyOuter
+  - type: GiftIgnore # WD EIT
 
 - type: entity
   parent: ClothingOuterArmorHeavy

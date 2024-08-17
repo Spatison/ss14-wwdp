@@ -57,6 +57,7 @@
         acts: ["Destruction"]
   - type: Occluder
   - type: BlockWeather
+  - type: ReflectAspectMark # WD EDIT
 
 - type: entity
   parent: BaseMaterialDoor
